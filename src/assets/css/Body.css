@@ -1,0 +1,7 @@
+#body {
+    background: linear-gradient(to right, #302b36, #585a5e, #302b36);
+    background-attachment: fixed; /* Keeps gradient in place when scrolling */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
