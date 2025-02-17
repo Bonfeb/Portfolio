@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import {Link} from "react-router-dom";
 import { Container, Row, Col, Carousel, Card } from "react-bootstrap";
 import { motion } from "framer-motion";
 import { ThemeContext } from "../context/ThemeContext";
@@ -58,17 +59,17 @@ const Home = () => {
                   <p className="mb-2">➤ <strong>Specialization:</strong> <span className="text-muted">Software Development</span></p>
                   <p className="mb-2">
                     ➤ <FaPhone className="text-primary me-2" />
-                    <a href="tel:+254712345678" className="text-decoration-none text-muted">+254 794544826</a>
+                    <Link to="tel:+254712345678" className="text-decoration-none text-muted">+254 794544826</Link>
                   </p>
                   <p className="mb-2">
                     ➤ <FaEnvelope className="text-danger me-2" />
-                    <a href="mailto:abcdefgh@gmail.com" className="text-decoration-none text-muted">bonfebdevs@gmail.com</a>
+                    <Link to="mailto:abcdefgh@gmail.com" className="text-decoration-none text-muted">bonfebdevs@gmail.com</Link>
                   </p>
                   <p className="mb-2">
                     ➤ <FaGlobe className="text-success me-2" />
-                    <a href="https://www.bonfeb.com" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-muted">
-                      www.bonfeb.com
-                    </a>
+                    <Link to="https://bonfebportfolio.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-decoration-none text-muted">
+                    https://bonfebportfolio.netlify.app/
+                    </Link>
                   </p>
                 </div>
               </Card.Body>
