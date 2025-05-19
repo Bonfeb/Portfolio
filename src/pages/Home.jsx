@@ -25,9 +25,9 @@ const Home = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const carouselItems = [
-    { img: slideImg1, alt: "Development workspace" },
-    { img: slideImg2, alt: "Coding session" },
-    { img: slideImg3, alt: "Project collaboration" },
+    { img: slideImage1, alt: "Development workspace" },
+    { img: slideImage2, alt: "Coding session" },
+    { img: slideImage3, alt: "Project collaboration" },
   ];
 
   const infoItems = [
