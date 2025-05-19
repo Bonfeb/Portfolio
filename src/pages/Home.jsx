@@ -1,372 +1,281 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { ThemeContext } from "../context/ThemeContext";
-import Footer from "../components/Footer";
-
-// Material-UI imports
 import { 
-  Container, 
-  Grid, 
-  Card, 
-  CardContent, 
-  Typography, 
-  Box, 
-  Divider, 
+  Container,
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  Divider,
+  useTheme,
   useMediaQuery,
-  Paper,
+  Grid,
+  Avatar,
   IconButton,
-  Tooltip,
-  Avatar
+  Paper
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { motion } from "framer-motion";
-
-// MUI Icons
-import PhoneIcon from '@mui/icons-material/Phone';
-import EmailIcon from '@mui/icons-material/Email';
-import LanguageIcon from '@mui/icons-material/Language';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
-// Import your slide images
+import { ThemeContext } from "../context/ThemeContext";
+import { Phone, Email, Language, ArrowRight } from "@mui/icons-material";
+import Footer from "../components/Footer";
+import Carousel from "react-material-ui-carousel";
 import slideImg1 from "../assets/images/slideImage1.jpg";
 import slideImg2 from "../assets/images/slideImage2.jpg";
 import slideImg3 from "../assets/images/slideImage3.jpg";
 
-// Custom styled components
-const StyledCard = styled(Card)(({ theme, darkMode }) => ({
-  height: '100%',
-  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
-  transition: 'transform 0.3s ease-in-out',
-  borderRadius: theme.spacing(2),
-  overflow: 'hidden',
-  background: darkMode ? theme.palette.grey[800] : theme.palette.background.paper,
-  color: darkMode ? theme.palette.common.white : theme.palette.text.primary,
-  "&:hover": {
-    transform: 'translateY(-8px)',
-  }
-}));
+const Home = () => {
+  const { darkMode } = useContext(ThemeContext);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-const WelcomeBanner = styled(Box)(({ theme, darkMode }) => ({
-  padding: theme.spacing(1),
-  background: darkMode ? theme.palette.grey[900] : '#f5f5f5',
-  borderRadius: theme.spacing(1),
-  marginBottom: theme.spacing(2),
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  overflow: 'hidden',
-}));
+  const carouselItems = [
+    { img: slideImg1, alt: "Development workspace" },
+    { img: slideImg2, alt: "Coding session" },
+    { img: slideImg3, alt: "Project collaboration" },
+  ];
 
-const ImageCarousel = ({ images, darkMode }) => {
-  const [currentSlide, setCurrentSlide] = React.useState(0);
-  const timerRef = React.useRef(null);
-  
-  React.useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % images.length);
-    }, 3000);
-    
-    return () => clearInterval(timerRef.current);
-  }, [images.length]);
-  
-  const goToNextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % images.length);
-  };
-  
-  const goToPrevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
-  };
-  
+  const infoItems = [
+    { 
+      icon: <ArrowRight color="primary" sx={{ mr: 1 }} />, 
+      text: "Profession:", 
+      value: "Bsc Information Technology" 
+    },
+    { 
+      icon: <ArrowRight color="primary" sx={{ mr: 1 }} />, 
+      text: "Specialization:", 
+      value: "Software Development" 
+    },
+    { 
+      icon: <Phone color="primary" sx={{ mr: 1 }} />, 
+      text: "+254 794544826", 
+      value: "", 
+      link: "tel:+254794544826" 
+    },
+    { 
+      icon: <Email color="primary" sx={{ mr: 1 }} />, 
+      text: "bonfebdevs@gmail.com", 
+      value: "", 
+      link: "mailto:bonfebdevs@gmail.com" 
+    },
+    { 
+      icon: <Language color="primary" sx={{ mr: 1 }} />, 
+      text: "https://bonfebportfolio.netlify.app/", 
+      value: "", 
+      link: "https://bonfebportfolio.netlify.app/",
+      external: true 
+    },
+  ];
+
   return (
     <Box
       sx={{
-        position: 'relative',
-        width: '100%',
-        height: { xs: '350px', sm: '400px', md: '500px' },
-        overflow: 'hidden',
-        borderRadius: 4,
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.15)',
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        backgroundColor: darkMode ? theme.palette.grey[900] : theme.palette.grey[50],
+        color: darkMode ? theme.palette.common.white : theme.palette.common.black,
+        transition: "all 0.3s ease",
       }}
     >
-      {images.map((img, index) => (
-        <Box
-          key={index}
-          component={motion.div}
-          initial={{ opacity: 0 }}
-          animate={{ 
-            opacity: currentSlide === index ? 1 : 0,
-            scale: currentSlide === index ? 1 : 1.05,
-          }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            display: currentSlide === index ? 'block' : 'none',
-          }}
-        >
-          <Box 
-            component="img"
-            src={img}
-            alt={`Slide ${index + 1}`}
-            sx={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              filter: darkMode ? 'brightness(0.85)' : 'none',
-            }}
-          />
-        </Box>
-      ))}
-      
-      <IconButton
-        onClick={goToPrevSlide}
-        sx={{
-          position: 'absolute',
-          left: 8,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          bgcolor: 'rgba(255, 255, 255, 0.3)',
-          '&:hover': {
-            bgcolor: 'rgba(255, 255, 255, 0.5)',
-          },
-          zIndex: 2,
-        }}
-      >
-        <ArrowBackIosNewIcon />
-      </IconButton>
-      
-      <IconButton
-        onClick={goToNextSlide}
-        sx={{
-          position: 'absolute',
-          right: 8,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          bgcolor: 'rgba(255, 255, 255, 0.3)',
-          '&:hover': {
-            bgcolor: 'rgba(255, 255, 255, 0.5)',
-          },
-          zIndex: 2,
-        }}
-      >
-        <ArrowForwardIosIcon />
-      </IconButton>
-      
-      <Box 
-        sx={{
-          position: 'absolute',
-          bottom: 16,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          gap: 1,
-          zIndex: 2,
-        }}
-      >
-        {images.map((_, index) => (
-          <Box
-            key={index}
-            sx={{
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              bgcolor: currentSlide === index ? 'primary.main' : 'rgba(255, 255, 255, 0.5)',
-              cursor: 'pointer',
-            }}
-            onClick={() => setCurrentSlide(index)}
-          />
-        ))}
-      </Box>
-    </Box>
-  );
-};
+      {/* Main Content */}
+      <Container maxWidth="xl" sx={{ py: 4, flexGrow: 1 }}>
+        <Grid container spacing={4} alignItems="center" justifyContent="center">
+          {/* Left: Image Carousel */}
+          <Grid item xs={12} md={6}>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Carousel
+                animation="fade"
+                interval={4000}
+                navButtonsAlwaysVisible={!isMobile}
+                sx={{
+                  borderRadius: 2,
+                  overflow: "hidden",
+                  boxShadow: 3,
+                  "& .CarouselItem": {
+                    height: "100%",
+                  },
+                }}
+              >
+                {carouselItems.map((item, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      height: { xs: 300, sm: 400, md: 500 },
+                      width: "100%",
+                      position: "relative",
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={item.img}
+                      alt={item.alt}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Carousel>
+            </motion.div>
+          </Grid>
 
-const ContactItem = ({ icon, text, link, color }) => (
-  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-    <Box component="span" sx={{ mr: 1, fontWeight: 'bold' }}>➤</Box>
-    <Avatar 
-      sx={{ 
-        bgcolor: color, 
-        width: 28, 
-        height: 28, 
-        mr: 1,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      {icon}
-    </Avatar>
-    <Typography 
-      component={Link} 
-      to={link} 
-      sx={{ 
-        textDecoration: 'none', 
-        color: 'text.secondary',
-        '&:hover': {
-          color: 'primary.main',
-          textDecoration: 'underline'
-        }
-      }}
-    >
-      {text}
-    </Typography>
-  </Box>
-);
+          {/* Right: Bio Data Card */}
+          <Grid item xs={12} md={6}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <Card
+                sx={{
+                  borderRadius: 2,
+                  boxShadow: 3,
+                  backgroundColor: darkMode ? theme.palette.grey[800] : theme.palette.common.white,
+                }}
+              >
+                <CardContent sx={{ p: 4 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      mb: 3,
+                    }}
+                  >
+                    <Avatar
+                      sx={{
+                        width: 120,
+                        height: 120,
+                        mb: 2,
+                        boxShadow: 3,
+                        border: `4px solid ${theme.palette.primary.main}`,
+                      }}
+                      src="https://via.placeholder.com/150" // Replace with your actual avatar image
+                    />
+                    <Typography
+                      variant="h4"
+                      component="h1"
+                      sx={{
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        textAlign: "center",
+                      }}
+                    >
+                      Stephen Bonfeb
+                    </Typography>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        color: theme.palette.text.secondary,
+                        mb: 2,
+                      }}
+                    >
+                      Full Stack Developer
+                    </Typography>
+                  </Box>
 
-const ProfileItem = ({ label, value }) => (
-  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-    <Box component="span" sx={{ mr: 1, fontWeight: 'bold' }}>➤</Box>
-    <Typography component="span" fontWeight="bold" sx={{ mr: 1 }}>
-      {label}:
-    </Typography>
-    <Typography color="text.secondary">
-      {value}
-    </Typography>
-  </Box>
-);
-
-const Home = () => {
-  const { darkMode } = useContext(ThemeContext);
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
-  
-  const slides = [slideImg1, slideImg2, slideImg3];
-
-  return (
-    <Container 
-      maxWidth={false}
-      disableGutters
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        bgcolor: darkMode ? 'grey.900' : 'grey.50',
-        color: darkMode ? 'common.white' : 'text.primary',
-        pt: 4,
-        pb: 2,
-        px: { xs: 2, sm: 3, md: 4 }
-      }}
-    >
-      {/* Welcome Banner */}
-      <WelcomeBanner darkMode={darkMode}>
-        <motion.div
-          animate={{ 
-            x: ["100%", "-100%"]
-          }}
-          transition={{ 
-            repeat: Infinity, 
-            duration: 15,
-            ease: "linear"
-          }}
-        >
-          <Typography 
-            variant="h6" 
-            component="span" 
-            fontWeight="bold" 
-            sx={{ 
-              color: 'error.main', 
-              textTransform: 'uppercase',
-              whiteSpace: 'nowrap'
-            }}
-          >
-            Welcome! It is Nice you are here.
-          </Typography>
-        </motion.div>
-      </WelcomeBanner>
-
-      {/* Main Content Grid */}
-      <Grid 
-        container 
-        spacing={4} 
-        sx={{ 
-          flexGrow: 1,
-          my: { xs: 2, md: 4 },
-        }}
-      >
-        {/* Order changes on small screens */}
-        <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <ImageCarousel images={slides} darkMode={darkMode} />
-          </motion.div>
-        </Grid>
-
-        <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          >
-            <StyledCard darkMode={darkMode}>
-              <CardContent sx={{ p: 4 }}>
-                <Box sx={{ textAlign: 'center', mb: 2 }}>
-                  <Typography variant="h4" component="h1" fontWeight="bold" color={darkMode ? "primary.light" : "primary.main"}>
-                    Stephen Bonfeb
-                  </Typography>
                   <Divider sx={{ my: 2 }} />
-                  <Typography variant="subtitle1" sx={{ fontStyle: 'italic', mb: 3 }}>
+
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontStyle: "italic",
+                      textAlign: "center",
+                      mb: 3,
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
                     Building web applications with React and Django. Exploring mobile development using React.js.
                   </Typography>
-                  <Divider sx={{ my: 2 }} />
-                </Box>
 
-                <Box sx={{ textAlign: 'left' }}>
-                  <ProfileItem label="Profession" value="Bsc Information Technology" />
-                  <ProfileItem label="Specialization" value="Software Development" />
-                  
-                  <ContactItem 
-                    icon={<PhoneIcon fontSize="small" />} 
-                    text="+254 794544826" 
-                    link="tel:+254794544826" 
-                    color="#1976d2"
-                  />
-                  
-                  <ContactItem 
-                    icon={<EmailIcon fontSize="small" />} 
-                    text="bonfebdevs@gmail.com" 
-                    link="mailto:bonfebdevs@gmail.com" 
-                    color="#d32f2f"
-                  />
-                  
-                  <ContactItem 
-                    icon={<LanguageIcon fontSize="small" />} 
-                    text="bonfebportfolio.netlify.app" 
-                    link="https://bonfebportfolio.netlify.app/" 
-                    color="#2e7d32"
-                  />
-                </Box>
-                
-                <Box 
-                  component={motion.div}
-                  whileHover={{ scale: 1.03 }}
-                  sx={{ 
-                    mt: 3, 
-                    p: 2, 
-                    borderRadius: 2,
-                    bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)',
-                    border: `1px solid ${darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
-                  }}
-                >
-                  <Typography variant="body2" color="text.secondary" textAlign="center">
-                    Let's build something amazing together! Feel free to reach out for collaborations or projects.
-                  </Typography>
-                </Box>
-              </CardContent>
-            </StyledCard>
-          </motion.div>
+                  <Divider sx={{ my: 2 }} />
+
+                  <Box sx={{ mt: 3 }}>
+                    {infoItems.map((item, index) => (
+                      <Box
+                        key={index}
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          mb: 2,
+                          "&:hover": {
+                            "& a": {
+                              color: theme.palette.primary.main,
+                            },
+                          },
+                        }}
+                      >
+                        {item.icon}
+                        <Typography variant="body1" sx={{ mr: 1 }}>
+                          {item.text}
+                        </Typography>
+                        {item.value && (
+                          <Typography variant="body1" color="text.secondary">
+                            {item.value}
+                          </Typography>
+                        )}
+                        {item.link && (
+                          <Link
+                            to={item.link}
+                            target={item.external ? "_blank" : "_self"}
+                            rel={item.external ? "noopener noreferrer" : ""}
+                            style={{
+                              textDecoration: "none",
+                              color: theme.palette.text.secondary,
+                              transition: "color 0.3s ease",
+                            }}
+                          >
+                            {item.text}
+                          </Link>
+                        )}
+                      </Box>
+                    ))}
+                  </Box>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
+
+      {/* Marquee Section */}
+      <Paper
+        elevation={0}
+        sx={{
+          backgroundColor: darkMode ? theme.palette.grey[800] : theme.palette.primary.light,
+          py: 1,
+          mb: 2,
+          borderRadius: 0,
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{
+            color: theme.palette.error.main,
+            fontWeight: 700,
+            textTransform: "uppercase",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            animation: "marquee 15s linear infinite",
+            "@keyframes marquee": {
+              "0%": { transform: "translateX(100%)" },
+              "100%": { transform: "translateX(-100%)" },
+            },
+          }}
+        >
+          Welcome! It is Nice you are here.
+        </Typography>
+      </Paper>
 
       {/* Footer */}
       <Footer />
-    </Container>
+    </Box>
   );
 };
 

@@ -12,18 +12,15 @@ import {
   TextField,
   Button,
   Box,
-  Paper,
-  Alert,
-  CircularProgress,
-  useTheme,
-  useMediaQuery,
   Card,
   CardContent,
   Divider,
   IconButton,
   Tooltip,
   Fade,
-  Snackbar
+  Snackbar,
+  useTheme,
+  useMediaQuery
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -52,83 +49,50 @@ const ContactContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: "rgba(0, 0, 0, 0.5)",
-    zIndex: 0,
-  },
 }));
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
+const StyledTextField = styled(TextField)(({ theme, darkMode }) => ({
   marginBottom: theme.spacing(3),
   "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: darkMode ? "rgba(255, 255, 255, 0.23)" : "rgba(0, 0, 0, 0.23)",
+    },
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
+      borderWidth: 1,
     },
   },
   "& .MuiInputLabel-root": {
-    color: theme.palette.text.secondary,
+    color: darkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.6)",
   },
   "& .MuiInputBase-input": {
-    position: "relative",
-    backgroundColor: theme.palette.mode === "light" 
-      ? "rgba(255, 255, 255, 0.9)" 
-      : "rgba(0, 0, 0, 0.7)",
+    backgroundColor: darkMode ? "rgba(255, 255, 255, 0.09)" : "rgba(0, 0, 0, 0.06)",
     borderRadius: theme.shape.borderRadius,
-    transition: theme.transitions.create([
-      "border-color",
-      "background-color",
-      "box-shadow",
-    ]),
+    color: darkMode ? "#fff" : theme.palette.text.primary,
   },
 }));
 
 const ContactCard = styled(Card)(({ theme, darkMode }) => ({
   background: darkMode 
-    ? "linear-gradient(135deg, rgba(33, 16, 61, 0.9), rgba(50, 50, 70, 0.9))" 
-    : "linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 250, 0.95))",
+    ? "rgba(33, 16, 61, 0.9)" 
+    : "rgba(255, 255, 255, 0.9)",
   backdropFilter: "blur(10px)",
-  borderRadius: theme.spacing(2),
-  boxShadow: darkMode 
-    ? "0 10px 30px rgba(0, 0, 0, 0.5)" 
-    : "0 10px 30px rgba(0, 0, 0, 0.15)",
-  overflow: "hidden",
-  position: "relative",
-  border: "1px solid",
-  borderColor: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.5)",
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent)",
-    zIndex: 1,
-  },
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: theme.shadows[4],
+  height: "100%",
 }));
 
 const InfoCard = styled(Card)(({ theme, darkMode }) => ({
   background: darkMode 
-    ? "linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(40, 40, 60, 0.9))" 
-    : "linear-gradient(135deg, rgba(240, 240, 255, 0.9), rgba(225, 225, 245, 0.95))",
+    ? "rgba(20, 20, 40, 0.9)" 
+    : "rgba(240, 240, 255, 0.9)",
   backdropFilter: "blur(10px)",
-  borderRadius: theme.spacing(2),
-  boxShadow: darkMode 
-    ? "0 10px 30px rgba(0, 0, 0, 0.5)" 
-    : "0 10px 30px rgba(0, 0, 0, 0.15)",
-  overflow: "hidden",
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: theme.shadows[4],
   height: "100%",
-  border: "1px solid",
-  borderColor: darkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.5)",
 }));
 
 const ContactInfoItem = ({ icon, title, value, color }) => {
@@ -146,7 +110,7 @@ const ContactInfoItem = ({ icon, title, value, color }) => {
           justifyContent: "center",
           alignItems: "center",
           mr: 2,
-          boxShadow: `0 4px 8px ${color}50`,
+          boxShadow: theme.shadows[2],
         }}
       >
         {icon}
@@ -166,13 +130,11 @@ const ContactInfoItem = ({ icon, title, value, color }) => {
 const SocialButton = styled(IconButton)(({ theme, color }) => ({
   backgroundColor: color,
   color: "#fff",
-  width: 44,
-  height: 44,
-  transition: "all 0.3s ease",
+  transition: theme.transitions.create(["transform", "box-shadow"]),
   "&:hover": {
     backgroundColor: color,
-    transform: "translateY(-5px)",
-    boxShadow: `0 5px 15px ${color}80`,
+    transform: "translateY(-3px)",
+    boxShadow: theme.shadows[4],
   },
 }));
 
@@ -180,7 +142,8 @@ function Contact() {
   const { darkMode } = useContext(ThemeContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
 
   const [formData, setFormData] = useState({
     name: "",
@@ -194,19 +157,17 @@ function Contact() {
   const [loading, setLoading] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
 
     const serviceID = import.meta.env.VITE_SERVICE_ID;
     const templateID = import.meta.env.VITE_TEMPLATE_ID;
-    const userID = import.meta.env.VITE_USER_ID; // Public Key from EmailJS
+    const userID = import.meta.env.VITE_USER_ID;
 
     emailjs
       .send(serviceID, templateID, formData, userID)
@@ -218,16 +179,14 @@ function Contact() {
       })
       .catch((error) => {
         setVariant("error");
-        setResponseMessage("Failed to send message. Try again later.");
+        setResponseMessage("Failed to send message. Please try again later.");
         setOpenSnackbar(true);
       })
       .finally(() => setLoading(false));
   };
 
   const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+    if (reason === 'clickaway') return;
     setOpenSnackbar(false);
   };
 
@@ -236,19 +195,19 @@ function Contact() {
       icon: <LocationOnIcon sx={{ color: "#fff" }} />,
       title: "Location",
       value: "Nairobi, Kenya",
-      color: "#2196f3",
+      color: theme.palette.primary.main,
     },
     {
       icon: <EmailIcon sx={{ color: "#fff" }} />,
       title: "Email",
       value: "bonfebdevs@gmail.com",
-      color: "#f44336",
+      color: theme.palette.error.main,
     },
     {
       icon: <PhoneIcon sx={{ color: "#fff" }} />,
       title: "Phone",
       value: "+254 794544826",
-      color: "#4caf50",
+      color: theme.palette.success.main,
     },
   ];
 
@@ -260,7 +219,7 @@ function Contact() {
   return (
     <>
       <ContactContainer>
-        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2, py: 4 }}>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -272,11 +231,9 @@ function Contact() {
               align="center"
               sx={{ 
                 fontWeight: 700, 
-                textTransform: "uppercase",
                 color: "#fff",
                 mb: 1,
                 fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
-                textShadow: "2px 2px 4px rgba(0,0,0,0.3)"
               }}
             >
               Contact Me
@@ -288,8 +245,6 @@ function Contact() {
               sx={{ 
                 mb: 6, 
                 color: "rgba(255, 255, 255, 0.85)",
-                fontWeight: 300,
-                fontSize: { xs: "1rem", sm: "1.25rem" },
               }}
             >
               Feel free to reach out. I'd love to hear from you!
@@ -297,8 +252,8 @@ function Contact() {
           </motion.div>
 
           <Grid container spacing={4}>
-            {/* Contact Form Column */}
-            <Grid item xs={12} md={7}>
+            {/* Contact Form Column - Will be first on mobile, left on desktop */}
+            <Grid item xs={12} md={6} lg={7} order={{ xs: 2, md: 1 }}>
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -312,7 +267,7 @@ function Contact() {
                       sx={{ 
                         mb: 3, 
                         fontWeight: 600,
-                        color: darkMode ? "#fff" : theme.palette.primary.main,
+                        color: theme.palette.primary.main,
                       }}
                     >
                       Send a Message
@@ -328,6 +283,7 @@ function Contact() {
                           value={formData.name}
                           onChange={handleChange}
                           required
+                          darkMode={darkMode}
                           InputProps={{
                             startAdornment: (
                               <PersonIcon sx={{ mr: 1, color: theme.palette.primary.main }} />
@@ -344,6 +300,7 @@ function Contact() {
                           value={formData.email}
                           onChange={handleChange}
                           required
+                          darkMode={darkMode}
                           InputProps={{
                             startAdornment: (
                               <EmailIcon sx={{ mr: 1, color: theme.palette.primary.main }} />
@@ -360,6 +317,7 @@ function Contact() {
                         value={formData.phone}
                         onChange={handleChange}
                         required
+                        darkMode={darkMode}
                         InputProps={{
                           startAdornment: (
                             <PhoneIcon sx={{ mr: 1, color: theme.palette.primary.main }} />
@@ -377,6 +335,7 @@ function Contact() {
                         multiline
                         rows={4}
                         required
+                        darkMode={darkMode}
                         InputProps={{
                           startAdornment: (
                             <MessageIcon 
@@ -407,17 +366,6 @@ function Contact() {
                             py: 1.5,
                             fontSize: "1rem",
                             fontWeight: 600,
-                            position: "relative",
-                            overflow: "hidden",
-                            background: darkMode 
-                              ? "linear-gradient(90deg, #2196f3, #3f51b5)" 
-                              : "linear-gradient(90deg, #3f51b5, #2196f3)",
-                            textTransform: "none",
-                            borderRadius: "8px",
-                            boxShadow: "0 4px 12px rgba(63, 81, 181, 0.4)",
-                            '&:hover': {
-                              boxShadow: "0 6px 16px rgba(63, 81, 181, 0.6)",
-                            }
                           }}
                           endIcon={loading ? null : <SendIcon />}
                         >
@@ -430,8 +378,8 @@ function Contact() {
               </motion.div>
             </Grid>
 
-            {/* Contact Info Column */}
-            <Grid item xs={12} md={5}>
+            {/* Contact Info Column - Will be second on mobile, right on desktop */}
+            <Grid item xs={12} md={6} lg={5} order={{ xs: 1, md: 2 }}>
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -445,7 +393,7 @@ function Contact() {
                       sx={{ 
                         mb: 3, 
                         fontWeight: 600,
-                        color: darkMode ? "#fff" : theme.palette.primary.main,
+                        color: theme.palette.primary.main,
                       }}
                     >
                       Contact Information
@@ -463,7 +411,7 @@ function Contact() {
                       ))}
                     </Box>
 
-                    <Divider sx={{ my: 3, opacity: 0.6 }} />
+                    <Divider sx={{ my: 3 }} />
                     
                     <Box>
                       <Typography 
@@ -471,7 +419,6 @@ function Contact() {
                         sx={{ 
                           mb: 2,
                           fontWeight: 500,
-                          color: darkMode ? "#fff" : theme.palette.text.primary,
                         }}
                       >
                         Connect with me
@@ -483,8 +430,9 @@ function Contact() {
                             <SocialButton
                               color={link.color}
                               component={motion.button}
-                              whileHover={{ scale: 1.1, rotate: -5 }}
+                              whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
+                              sx={{ width: 44, height: 44 }}
                             >
                               {link.icon}
                             </SocialButton>
@@ -499,18 +447,16 @@ function Contact() {
                         p: 2, 
                         borderRadius: 2,
                         bgcolor: darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)",
-                        border: "1px dashed",
-                        borderColor: darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
                       }}
                     >
                       <Typography 
                         variant="body2" 
                         sx={{ 
                           fontStyle: "italic",
-                          color: darkMode ? "rgba(255,255,255,0.7)" : "text.secondary",
+                          color: "text.secondary",
                         }}
                       >
-                        I'm currently available for freelance work. Let's discuss your project and make it happen!
+                        I'm currently available for freelance work. Let's discuss your project!
                       </Typography>
                     </Box>
                   </CardContent>
