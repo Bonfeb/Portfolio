@@ -17,6 +17,9 @@ import { motion } from "framer-motion";
 import { ThemeContext } from "../context/ThemeContext";
 import { Phone, Email, Language, ArrowRight } from "@mui/icons-material";
 import Footer from "../components/Footer";
+import slideImage1 from "../assets/images/slideImage1.jpg"
+import slideImage2 from "../assets/images/slideImage2.jpg"
+import slideImage3 from "../assets/images/slideImage3.jpg"
 import Carousel from "react-material-ui-carousel";
 
 const Home = () => {
