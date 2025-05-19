@@ -11,7 +11,6 @@ import {
   useMediaQuery,
   Grid,
   Avatar,
-  IconButton,
   Paper
 } from "@mui/material";
 import { motion } from "framer-motion";
@@ -19,9 +18,6 @@ import { ThemeContext } from "../context/ThemeContext";
 import { Phone, Email, Language, ArrowRight } from "@mui/icons-material";
 import Footer from "../components/Footer";
 import Carousel from "react-material-ui-carousel";
-import slideImg1 from "../assets/images/slideImage1.jpg";
-import slideImg2 from "../assets/images/slideImage2.jpg";
-import slideImg3 from "../assets/images/slideImage3.jpg";
 
 const Home = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -74,12 +70,26 @@ const Home = () => {
         minHeight: "100vh",
         backgroundColor: darkMode ? theme.palette.grey[900] : theme.palette.grey[50],
         color: darkMode ? theme.palette.common.white : theme.palette.common.black,
-        transition: "all 0.3s ease",
       }}
     >
-      {/* Main Content */}
-      <Container maxWidth="xl" sx={{ py: 4, flexGrow: 1 }}>
-        <Grid container spacing={4} alignItems="center" justifyContent="center">
+      {/* Main Content - Reduced padding */}
+      <Container 
+        maxWidth="xl" 
+        sx={{ 
+          py: 2, // Reduced from py: 4
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center"
+        }}
+      >
+        <Grid 
+          container 
+          spacing={3} // Reduced from spacing={4}
+          alignItems="center" 
+          justifyContent="center"
+          sx={{ my: 0 }} // Remove default margin
+        >
           {/* Left: Image Carousel */}
           <Grid item xs={12} md={6}>
             <motion.div
@@ -95,18 +105,14 @@ const Home = () => {
                   borderRadius: 2,
                   overflow: "hidden",
                   boxShadow: 3,
-                  "& .CarouselItem": {
-                    height: "100%",
-                  },
                 }}
               >
                 {carouselItems.map((item, index) => (
                   <Box
                     key={index}
                     sx={{
-                      height: { xs: 300, sm: 400, md: 500 },
+                      height: { xs: 280, sm: 380, md: 450 }, // Slightly reduced heights
                       width: "100%",
-                      position: "relative",
                     }}
                   >
                     <Box
@@ -139,32 +145,24 @@ const Home = () => {
                   backgroundColor: darkMode ? theme.palette.grey[800] : theme.palette.common.white,
                 }}
               >
-                <CardContent sx={{ p: 4 }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      mb: 3,
-                    }}
-                  >
+                <CardContent sx={{ p: 3 }}> {/* Reduced padding */}
+                  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <Avatar
                       sx={{
-                        width: 120,
-                        height: 120,
-                        mb: 2,
-                        boxShadow: 3,
-                        border: `4px solid ${theme.palette.primary.main}`,
+                        width: 100, // Reduced from 120
+                        height: 100, // Reduced from 120
+                        mb: 1, // Reduced from mb: 2
+                        border: `3px solid ${theme.palette.primary.main}`, // Thinner border
                       }}
-                      src="https://via.placeholder.com/150" // Replace with your actual avatar image
+                      src="https://via.placeholder.com/150"
                     />
                     <Typography
-                      variant="h4"
+                      variant="h5" // Changed from h4
                       component="h1"
                       sx={{
                         fontWeight: 700,
-                        textTransform: "uppercase",
                         textAlign: "center",
+                        mt: 1 // Added small top margin
                       }}
                     >
                       Stephen Bonfeb
@@ -173,42 +171,37 @@ const Home = () => {
                       variant="subtitle1"
                       sx={{
                         color: theme.palette.text.secondary,
-                        mb: 2,
+                        mb: 1, // Reduced from mb: 2
                       }}
                     >
                       Full Stack Developer
                     </Typography>
                   </Box>
 
-                  <Divider sx={{ my: 2 }} />
+                  <Divider sx={{ my: 1 }} /> {/* Reduced margin */}
 
                   <Typography
                     variant="body1"
                     sx={{
                       fontStyle: "italic",
                       textAlign: "center",
-                      mb: 3,
+                      mb: 2, // Reduced from mb: 3
                       color: theme.palette.text.secondary,
                     }}
                   >
                     Building web applications with React and Django. Exploring mobile development using React.js.
                   </Typography>
 
-                  <Divider sx={{ my: 2 }} />
+                  <Divider sx={{ my: 1 }} /> {/* Reduced margin */}
 
-                  <Box sx={{ mt: 3 }}>
+                  <Box sx={{ mt: 2 }}> {/* Reduced margin */}
                     {infoItems.map((item, index) => (
                       <Box
                         key={index}
                         sx={{
                           display: "flex",
                           alignItems: "center",
-                          mb: 2,
-                          "&:hover": {
-                            "& a": {
-                              color: theme.palette.primary.main,
-                            },
-                          },
+                          mb: 1.5, // Reduced spacing
                         }}
                       >
                         {item.icon}
@@ -228,7 +221,6 @@ const Home = () => {
                             style={{
                               textDecoration: "none",
                               color: theme.palette.text.secondary,
-                              transition: "color 0.3s ease",
                             }}
                           >
                             {item.text}
@@ -244,18 +236,18 @@ const Home = () => {
         </Grid>
       </Container>
 
-      {/* Marquee Section */}
+      {/* Marquee Section - Made more compact */}
       <Paper
         elevation={0}
         sx={{
           backgroundColor: darkMode ? theme.palette.grey[800] : theme.palette.primary.light,
-          py: 1,
-          mb: 2,
+          py: 0.5, // Reduced padding
+          mb: 1, // Reduced margin
           borderRadius: 0,
         }}
       >
         <Typography
-          variant="body1"
+          variant="body2" // Smaller font
           sx={{
             color: theme.palette.error.main,
             fontWeight: 700,
@@ -273,10 +265,9 @@ const Home = () => {
         </Typography>
       </Paper>
 
-      {/* Footer */}
+      {/* Footer - Will now sit closer to content */}
       <Footer />
     </Box>
   );
 };
-
 export default Home;
