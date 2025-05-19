@@ -2,13 +2,15 @@ import React, { useContext } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/Body.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Button } from "react-bootstrap";
+import { createTheme, ThemeProvider as MUIThemeProvider, CssBaseline, IconButton } from "@mui/material";
+import { LightMode, DarkMode } from "@mui/icons-material";
+import { ThemeProvider, ThemeContext } from "./context/ThemeContext";
+
 import Skills from './pages/Skills';
 import Resume from './pages/Resume';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import Navibar from './components/Navibar';
-import { ThemeProvider, ThemeContext } from "./context/ThemeContext";
 
 function App() {
   return (
@@ -18,26 +20,42 @@ function App() {
   );
 }
 
-// Separate component to use ThemeContext
 function AppContent() {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
+
+  const muiTheme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      background: {
+        default: darkMode ? "#121212" : "#f5f5f5",
+        paper: darkMode ? "#1e1e1e" : "#ffffff",
+      },
+    },
+  });
 
   return (
-    <Router>
-      <div className={darkMode ? "bg-dark text-light" : "bg-light text-dark"}>
-        <Navibar>
-          <Button onClick={() => setDarkMode(!darkMode)} className="ms-auto">
-            {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
-          </Button>
-        </Navibar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/resume" element={<Resume />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </div>
-    </Router>
+    <MUIThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      <Router>
+        <div className={darkMode ? "bg-dark text-light" : "bg-light text-dark"}>
+          <Navibar />
+          
+          {/* Toggle button on top right */}
+          <div className="text-end p-2 pe-4">
+            <IconButton onClick={toggleDarkMode} color="inherit">
+              {darkMode ? <LightMode /> : <DarkMode />}
+            </IconButton>
+          </div>
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/skills" element={<Skills />} />
+            <Route path="/resume" element={<Resume />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </div>
+      </Router>
+    </MUIThemeProvider>
   );
 }
 
