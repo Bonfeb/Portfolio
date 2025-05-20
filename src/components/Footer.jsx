@@ -1,36 +1,63 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const Footer = ({ darkMode }) => {
   const twitter = import.meta.env.VITE_TWITTER;
   const facebook = import.meta.env.VITE_FACEBOOK;
   const github = import.meta.env.VITE_GITHUB;
-  const linkedin = import.meta.env.VITE_LINKEDIN
+  const linkedin = import.meta.env.VITE_LINKEDIN;
 
   return (
-    <footer className={`py-4 mt-5 text-white ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`} style={{background: 'linear-gradient(180deg, rgb(63, 77, 60), rgb(25, 52, 32))', color: 'orange'}}>
-      <Container >
-        <Row className="align-items-center text-center text-md-start">
-          <Col md={6}>
-            <p className="mb-0">&copy; {new Date().getFullYear()} <span className="text-uppercase">Bonfeb.</span> All Rights Reserved.</p>
-          </Col>
-          <Col md={6} className="d-flex justify-content-center justify-content-md-end gap-3">
-            <Link to={facebook} target="_blank"  rel="noopener noreferrer" className={darkMode ? "text-light" : "text-dark"}>
-              <FaFacebook size={24} />
-            </Link>
-            <Link to={twitter} target="_blank"  rel="noopener noreferrer" className={darkMode ? "text-light" : "text-dark"}>
-              <FaTwitter size={24} />
-            </Link>
-            <Link to={linkedin} target="_blank"  rel="noopener noreferrer" className={darkMode ? "text-light" : "text-dark"}>
-              <FaLinkedin size={24} />
-            </Link>
-            <Link to={github} target="_blank"  rel="noopener noreferrer" className={darkMode ? "text-light" : "text-dark"}>
-              <FaGithub size={24} />
-            </Link>
-          </Col>
-        </Row>
-      </Container>
+    <footer className={`mt-0 py-6 ${darkMode ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}`}>
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="mb-4 md:mb-0">
+            <p className="text-sm">&copy; {new Date().getFullYear()} Bonfeb. All Rights Reserved.</p>
+          </div>
+          
+          <div className="flex space-x-4">
+            {facebook && (
+              <a 
+                href={facebook} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={`hover:text-blue-500 transition-colors duration-300`}
+              >
+                <FaFacebook size={20} />
+              </a>
+            )}
+            {twitter && (
+              <a 
+                href={twitter} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={`hover:text-blue-400 transition-colors duration-300`}
+              >
+                <FaTwitter size={20} />
+              </a>
+            )}
+            {linkedin && (
+              <a 
+                href={linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={`hover:text-blue-600 transition-colors duration-300`}
+              >
+                <FaLinkedin size={20} />
+              </a>
+            )}
+            {github && (
+              <a 
+                href={github} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={`hover:text-gray-500 transition-colors duration-300`}
+              >
+                <FaGithub size={20} />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
     </footer>
   );
 };
