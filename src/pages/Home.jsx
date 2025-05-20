@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { 
-  Container,
   Box,
   Typography,
   Card,
@@ -259,61 +258,60 @@ const Home = () => {
         transition: "background-color 0.3s ease-in-out",
       }}
     >
-
-      {/* Main Content */}
-      <Container 
-        maxWidth="xl" 
+      {/* Main Content - Full Width Card */}
+      <Box 
         sx={{ 
           py: { xs: 3, md: 5 },
-          px: { xs: 2, sm: 3 },
+          px: { xs: 0, sm: 0 }, // Remove horizontal padding for full width
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          width: "100%",
         }}
       >
-        <Grid 
-          container 
-          spacing={{ xs: 3, md: 5 }}
-          alignItems="center" 
-          justifyContent="center"
-          direction={isMobile ? "column-reverse" : "row"}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          style={{ width: "100%" }}
         >
-          {/* Left: Image Carousel */}
-          <Grid item xs={12} md={6}>
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <ImageCarousel items={carouselItems} />
-            </motion.div>
-          </Grid>
-
-          {/* Right: Bio Data Card */}
-          <Grid item xs={12} md={6}>
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <Card
-                elevation={darkMode ? 4 : 2}
-                sx={{
-                  borderRadius: 4,
-                  overflow: "hidden",
-                  background: darkMode 
-                    ? `linear-gradient(145deg, ${theme.palette.grey[800]} 0%, ${theme.palette.grey[900]} 100%)` 
-                    : `linear-gradient(145deg, ${theme.palette.common.white} 0%, ${theme.palette.grey[50]} 100%)`,
-                  border: `1px solid ${darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}`,
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    boxShadow: darkMode ? theme.shadows[8] : theme.shadows[6],
-                    transform: "translateY(-5px)",
-                  }
-                }}
+          <Card
+            elevation={darkMode ? 4 : 2}
+            sx={{
+              borderRadius: 0, // Remove border radius for full width appearance
+              overflow: "hidden",
+              background: darkMode 
+                ? `linear-gradient(145deg, ${theme.palette.grey[800]} 0%, ${theme.palette.grey[900]} 100%)` 
+                : `linear-gradient(145deg, ${theme.palette.common.white} 0%, ${theme.palette.grey[50]} 100%)`,
+              border: `1px solid ${darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}`,
+              transition: "all 0.3s ease",
+              width: "100%", // Ensure card takes full width
+              marginLeft: 0,
+              marginRight: 0,
+            }}
+          >
+            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+              <Grid 
+                container 
+                spacing={{ xs: 3, md: 5 }}
+                alignItems="center" 
+                justifyContent="center"
+                direction={isMobile ? "column-reverse" : "row"}
               >
-                <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+                {/* Left: Image Carousel */}
+                <Grid item xs={12} md={6}>
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8 }}
+                  >
+                    <ImageCarousel items={carouselItems} />
+                  </motion.div>
+                </Grid>
+
+                {/* Right: Bio Data */}
+                <Grid item xs={12} md={6}>
                   <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <motion.div variants={itemVariants}>
                       <Avatar
@@ -339,9 +337,7 @@ const Home = () => {
                         sx={{
                           fontWeight: 700,
                           textAlign: "center",
-                          background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
+                          color: "#1976d2", // Blue color for the title
                           mb: 0.5,
                         }}
                       >
@@ -404,14 +400,22 @@ const Home = () => {
                     />
                   </motion.div>
 
-                  {/* Personal Info Section */}
-                  <Box sx={{ mt: 1, mb: 2 }}>
-                    <Grid container spacing={1}>
+                  {/* Personal Info Section - Evenly spread */}
+                  <Box 
+                    sx={{ 
+                      mt: 1, 
+                      mb: 2,
+                      width: "100%",
+                      px: { xs: 1, sm: 4, md: 6 }, // Add padding to create equal space on left/right
+                    }}
+                  >
+                    <Grid container spacing={3} justifyContent="center">
                       {personalItems.map((item, index) => (
-                        <Grid item xs={12} sm={6} key={`personal-${index}`}>
+                        <Grid item xs={12} sm={6} key={`personal-${index}`} sx={{ display: "flex", justifyContent: "center" }}>
                           <motion.div
                             variants={itemVariants}
                             whileHover={{ scale: 1.03 }}
+                            style={{ width: "100%", maxWidth: "280px" }} // Control maximum width
                           >
                             <Paper
                               elevation={darkMode ? 3 : 1}
@@ -422,6 +426,7 @@ const Home = () => {
                                 backgroundColor: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)',
                                 borderRadius: 2,
                                 height: "100%",
+                                justifyContent: "center", // Center content
                               }}
                             >
                               {item.icon}
@@ -443,6 +448,8 @@ const Home = () => {
                   {/* Contact Info Section */}
                   <motion.div variants={itemVariants}>
                     <Typography
+                      component={Link}
+                      to="/contact"
                       variant="subtitle2"
                       sx={{
                         textAlign: "center",
@@ -453,6 +460,11 @@ const Home = () => {
                         textTransform: "uppercase",
                         fontSize: "0.8rem",
                         letterSpacing: "0.05rem",
+                        display: "block", // To make the Link work correctly
+                        textDecoration: "none", // Remove underline from link
+                        "&:hover": {
+                          textDecoration: "underline",
+                        }
                       }}
                     >
                       Get in touch
@@ -475,6 +487,7 @@ const Home = () => {
                           sx={{
                             display: "flex",
                             alignItems: "center",
+                            justifyContent: "center", // Center contact info
                             color: darkMode ? theme.palette.primary.light : theme.palette.primary.main,
                             textDecoration: "none",
                             transition: "all 0.2s ease",
@@ -501,12 +514,12 @@ const Home = () => {
                       </motion.div>
                     ))}
                   </Box>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-        </Grid>
-      </Container>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </Box>
 
       {/* Footer */}
       <Footer />
