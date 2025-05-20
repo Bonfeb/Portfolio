@@ -1,24 +1,15 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext } from "react";
 
 export const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Load preference from localStorage on initial render
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("darkMode");
-    if (storedTheme !== null) {
-      setDarkMode(JSON.parse(storedTheme));
-    }
-  }, []);
-
-  // Save preference to localStorage
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
-
-  const toggleDarkMode = () => setDarkMode((prev) => !prev);
+  // Always set to true for dark mode only
+  const darkMode = true;
+  
+  // These functions are kept for API compatibility
+  // but they won't actually change the theme
+  const setDarkMode = () => {}; 
+  const toggleDarkMode = () => {};
 
   return (
     <ThemeContext.Provider value={{ darkMode, setDarkMode, toggleDarkMode }}>

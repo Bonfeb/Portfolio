@@ -20,14 +20,6 @@ const Footer = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Typography
-          variant="h3"
-          component="h2"
-          sx={{ fontWeight: "bold", mb: 2 }}
-        >
-          Stephen Bonfeb
-        </Typography>
-
         <Typography variant="body2" sx={{ fontStyle: "italic", mb: 4 }}>
           Useful links to get in touch with me.
         </Typography>

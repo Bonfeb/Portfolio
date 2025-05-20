@@ -19,9 +19,14 @@ const Resume = () => {
     document.body.removeChild(link);
   };
 
+  // Updated color scheme for better contrast
   const bgClass = darkMode ? "bg-dark text-light" : "bg-light text-dark";
-  const cardBg = darkMode ? "bg-secondary text-light" : "bg-white text-dark";
-  const headerBg = darkMode ? "#222" : "linear-gradient(to right, #053d79, #291548)";
+  const cardBg = darkMode ? "bg-dark text-light border border-secondary" : "bg-white text-dark";
+  const innerCardBg = darkMode ? "bg-secondary text-white" : "bg-light text-dark";
+  const listItemBg = darkMode ? "bg-secondary text-white" : "bg-white text-dark";
+  const headerBg = darkMode 
+    ? "linear-gradient(to right, #1a1a1a, #333333)" 
+    : "linear-gradient(to right, #053d79, #291548)";
 
   return (
     <Container fluid id="body" className={`py-5 ${bgClass}`}>
@@ -48,7 +53,7 @@ const Resume = () => {
             </Card.Header>
 
             {/* Body */}
-            <Card.Body>
+            <Card.Body className={cardBg}>
               <Row className="g-4">
                 {/* Profile Image */}
                 <Col xs={12} md={4}>
@@ -63,14 +68,14 @@ const Resume = () => {
 
                 {/* Experience */}
                 <Col xs={12} md={4}>
-                  <Card className={`mb-3 border-0 shadow-sm ${cardBg}`}>
+                  <Card className={`mb-3 border-0 shadow-sm ${innerCardBg}`}>
                     <Card.Header className="text-center fw-bold">
                       <FaBriefcase className="me-2" /> Experience
                     </Card.Header>
                     <Card.Body>
                       <ListGroup variant="flush">
                         {resume.experiences.map((exp) => (
-                          <ListGroup.Item key={exp.id} className={darkMode ? "bg-dark text-light" : ""}>
+                          <ListGroup.Item key={exp.id} className={listItemBg}>
                             <strong>{exp.title}</strong> – {exp.company} ({exp.duration})
                             <ul>
                               {exp.responsibilities.map((task, idx) => (
@@ -86,7 +91,7 @@ const Resume = () => {
 
                 {/* Education + Certifications */}
                 <Col xs={12} md={4}>
-                  <Card className={`mb-3 border-0 shadow-sm ${cardBg}`}>
+                  <Card className={`mb-3 border-0 shadow-sm ${innerCardBg}`}>
                     <Card.Header className="text-center fw-bold">
                       <FaBookReader className="me-2" /> Learning
                     </Card.Header>
@@ -94,7 +99,7 @@ const Resume = () => {
                       <h6 className="mt-3 fw-bold"><FaSchool className="me-2" /> Education</h6>
                       <ListGroup variant="flush">
                         {resume.education.map((edu) => (
-                          <ListGroup.Item key={edu.id} className={darkMode ? "bg-dark text-light" : ""}>
+                          <ListGroup.Item key={edu.id} className={listItemBg}>
                             <strong>{edu.achievement}</strong> – {edu.institute} ({edu.year})
                             <ul>
                               {edu.description.map((desc, idx) => (
@@ -108,7 +113,7 @@ const Resume = () => {
                       <h6 className="mt-4 fw-bold"><FaCertificate className="me-2" /> Certifications</h6>
                       <ListGroup variant="flush">
                         {resume.certifications.map((cert) => (
-                          <ListGroup.Item key={cert.id} className={darkMode ? "bg-dark text-light" : ""}>
+                          <ListGroup.Item key={cert.id} className={listItemBg}>
                             <li>{cert.name}</li>
                           </ListGroup.Item>
                         ))}
@@ -120,12 +125,12 @@ const Resume = () => {
             </Card.Body>
 
             {/* Referees & Download */}
-            <Card.Footer className="text-center">
+            <Card.Footer className={`text-center ${cardBg}`}>
               <h5 className="mb-3"><FaPhone className="me-2" /> Referees</h5>
               <Row className="g-3">
                 {resume.referees.map((ref) => (
                   <Col xs={12} md={6} key={ref.id}>
-                    <Card className={`p-3 border-0 shadow-sm ${darkMode ? "bg-dark text-light" : "bg-light"}`}>
+                    <Card className={`p-3 border-0 shadow-sm ${innerCardBg}`}>
                       <strong>{ref.name}</strong> – {ref.position} <br />
                       Phone: {ref.phone} <br />
                       Email: {ref.email}
@@ -135,7 +140,7 @@ const Resume = () => {
               </Row>
 
               <Button
-                variant="success"
+                variant={darkMode ? "outline-light" : "success"}
                 className="mt-4 px-4 py-2 rounded-pill shadow-sm"
                 onClick={handleDownload}
               >
