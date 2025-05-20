@@ -95,19 +95,7 @@ function Navibar() {
                   objectFit: "cover"
                 }}
               />
-              <span 
-                style={{ 
-                  background: darkMode 
-                    ? "linear-gradient(90deg, #ffffff, #a8a8a8)" 
-                    : "linear-gradient(90deg, #212529, #495057)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: darkMode ? "transparent" : "transparent",
-                  fontSize: "1.2rem",
-                  letterSpacing: "0.5px"
-                }}
-              >
-                Bonfeb
-              </span>
+              <span>Bonfeb</span>
             </Navbar.Brand>
             
             <button 

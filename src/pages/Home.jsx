@@ -259,56 +259,6 @@ const Home = () => {
         transition: "background-color 0.3s ease-in-out",
       }}
     >
-      {/* Hero Banner - Full width welcome message */}
-      <Box
-        sx={{
-          width: "100%",
-          py: { xs: 1.5, sm: 2 },
-          px: 2,
-          backgroundColor: theme.palette.primary.main,
-          color: "#fff",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-          boxShadow: theme.shadows[3],
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Typography variant={isSmall ? "body1" : "h6"} sx={{ fontWeight: 500 }}>
-            Welcome! It is Nice you are here.
-          </Typography>
-        </motion.div>
-        
-        {/* Background decoration */}
-        <Box 
-          sx={{
-            position: "absolute",
-            top: -15,
-            left: -15,
-            width: 80,
-            height: 80,
-            borderRadius: "50%",
-            backgroundColor: "rgba(255,255,255,0.1)",
-            zIndex: 0,
-          }}
-        />
-        <Box 
-          sx={{
-            position: "absolute",
-            bottom: -20,
-            right: -20,
-            width: 100,
-            height: 100,
-            borderRadius: "50%",
-            backgroundColor: "rgba(255,255,255,0.1)",
-            zIndex: 0,
-          }}
-        />
-      </Box>
 
       {/* Main Content */}
       <Container 
@@ -378,7 +328,7 @@ const Home = () => {
                             transform: "scale(1.05)",
                           }
                         }}
-                        src="https://via.placeholder.com/150"
+                        src={slideImage1}
                       />
                     </motion.div>
                     

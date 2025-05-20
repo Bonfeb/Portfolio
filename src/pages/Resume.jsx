@@ -25,8 +25,6 @@ const Resume = () => {
 
   return (
     <Container fluid id="body" className={`py-5 ${bgClass}`}>
-      <h2 className="text-center mb-4 text-uppercase">📄 Resume</h2>
-      <hr className="mb-4" style={{ opacity: 0.2 }} />
       {resumes.map((resume) => (
         <motion.div
           key={resume.id}

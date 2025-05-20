@@ -64,13 +64,6 @@ const Skills = () => {
           <div className="position-relative text-center mb-4">
             <h2 className={`display-5 fw-bold text-uppercase position-relative d-inline-block ${darkMode ? "text-light" : "text-dark"}`}>
               My Skills
-              <span className="position-absolute" style={{ 
-                fontSize: "2.5rem", 
-                top: "-0.9rem", 
-                right: "-1.8rem", 
-                opacity: 0.7,
-                color: darkMode ? "#6c757d" : "#6610f2"
-              }}>🛠</span>
             </h2>
             <div className="position-relative d-flex justify-content-center">
               <div style={{ 
