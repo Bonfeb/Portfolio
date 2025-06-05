@@ -116,7 +116,7 @@ export const resumes = [
     }
   ];
 
-  export const skills = [
+export const skills = [
         {
           id: 1,
           skill_name: "Python",
@@ -179,7 +179,7 @@ export const resumes = [
         } 
   ];
 
-  export const projects = [
+export const projects = [
     {
       id: 1,
       title: "OffWorld Media Africa",
