@@ -42,7 +42,8 @@ function Navibar() {
     { to: "/", text: "Home" },
     { to: "/skills", text: "Skills" },
     { to: "/resume", text: "Resume" },
-    { to: "/contact", text: "Contact" }
+    { to: "/contact", text: "Contact" },
+    { to: "/projects", text: "Projects" }
   ];
 
   // Navbar animation variants

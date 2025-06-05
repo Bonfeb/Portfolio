@@ -1,17 +1,22 @@
 import React, { useContext } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/css/Body.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { createTheme, ThemeProvider as MUIThemeProvider, CssBaseline, IconButton } from "@mui/material";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/Body.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  createTheme,
+  ThemeProvider as MUIThemeProvider,
+  CssBaseline,
+  IconButton,
+} from "@mui/material";
 import { LightMode, DarkMode } from "@mui/icons-material";
 import { ThemeProvider, ThemeContext } from "./context/ThemeContext";
 
-import Skills from './pages/Skills';
-import Resume from './pages/Resume';
-import Home from './pages/Home';
-import Contact from './pages/Contact';
-import Navibar from './components/Navibar';
-
+import Skills from "./pages/Skills";
+import Resume from "./pages/Resume";
+import Home from "./pages/Home";
+import Contact from "./pages/Contact";
+import Navibar from "./components/Navibar";
+import Projects from "./pages/Projects";
 function App() {
   return (
     <ThemeProvider>
@@ -39,7 +44,7 @@ function AppContent() {
       <Router>
         <div className={darkMode ? "bg-dark text-light" : "bg-light text-dark"}>
           <Navibar />
-          
+
           {/* Toggle button on top right */}
           <div className="text-end p-2 pe-4">
             <IconButton onClick={toggleDarkMode} color="inherit">
@@ -52,6 +57,7 @@ function AppContent() {
             <Route path="/skills" element={<Skills />} />
             <Route path="/resume" element={<Resume />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/projects" element={<Projects />} />
           </Routes>
         </div>
       </Router>
