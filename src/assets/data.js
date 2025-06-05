@@ -4,6 +4,10 @@ import reactNativeSkill from "../assets/images/reactNativeSkill.jpg";
 import djangoSkill from "../assets/images/djangoSkill.jpg";
 import drfSkill from "../assets/images/drfSkill.png";
 import htmlCssSkill from "../assets/images/htmlCssSkill.jpg"
+import offworldMedia from "../assets/images/offworldMedia.png";
+import bursaryApp from "../assets/images/bursaryApp.png";
+import budgetAllocation from "../assets/images/budgetAllocation.png";
+import notesApp from "../assets/images/notesApp.png";
 
 
 // Resume Data
@@ -173,5 +177,45 @@ export const resumes = [
             "Skilled in modern web design principles, animations, and cross-browser compatibility."
           ]
         } 
+  ];
+
+  export const projects = [
+    {
+      id: 1,
+      title: "OffWorld Media Africa",
+      image: offworldMedia,
+      description: "A fully functional e-commerce website built with React and Django.",
+      technologies: ["React", "Django", "HTML5", "React Bootstrap", "MUI"],
+      link: "https://github.com/Bonfeb/offworldmedia-backend.git",
+      liveUrl: "https://offworld-media-frontend.onrender.com/"
+    },
+    {
+      id: 2,
+      title: "Bursary Application System",
+      image: bursaryApp,
+      description: "A fully functional e-commerce website built with React and Django.",
+      technologies: ["Django", "HTML5", "CSS", "JavaScript"],
+      link: "https://github.com/Bonfeb/Bursary-Application-System.git",
+      liveUrl: "https://bursary-application-system.onrender.com/"
+    },
+    {
+      id: 3,
+      title: "Budget Allocation Application",
+      image: budgetAllocation,
+      description: "A fully functional e-commerce website built with React and Django.",
+      technologies: ["React"],
+      link: "https://github.com/Bonfeb/Budget-Allocation-App.git",
+      liveUrl: "https://budget-allocation-app.onrender.com/"
+    },
+    {
+      id: 4,
+      title: "Notes Application",
+      image: notesApp,
+      description: "A fully functional e-commerce website built with React and Django.",
+      technologies: ["React"],
+      link: "https://github.com/Bonfeb/Notes-App.git",
+      liveUrl: "https://notes-app-bonfeb.onrender.com/"
+    }
+
   ];
   
