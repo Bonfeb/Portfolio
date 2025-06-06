@@ -191,7 +191,7 @@ export const projects = [
     ],
       technologies: ["React", "Django", "HTML5", "React Bootstrap", "MUI"],
       link: "https://github.com/Bonfeb/offworldmedia-backend.git",
-      liveUrl: "https://offworld-media-frontend.onrender.com/"
+      liveUrl: "https://offworldmedia-frontend.onrender.com/"
     },
     {
       id: 2,

@@ -28,15 +28,30 @@ import { projects } from "../assets/data";
 // Styled components
 const StyledCard = styled(Card)(({ theme }) => ({
   height: "100%",
+  width: "100%",
+  maxWidth: "400px",
+  minHeight: "500px",
   display: "flex",
   flexDirection: "column",
   position: "relative",
+  margin: "0 auto",
   background:
     theme.palette.mode === "dark"
       ? `linear-gradient(145deg, ${theme.palette.grey[800]}, ${theme.palette.grey[900]})`
       : `linear-gradient(145deg, ${theme.palette.common.white}, ${theme.palette.grey[50]})`,
   borderRadius: theme.spacing(2),
   overflow: "hidden",
+  [theme.breakpoints.down('md')]: {
+    maxWidth: "350px",
+    minHeight: "450px",
+  },
+  [theme.breakpoints.down('sm')]: {
+    maxWidth: "100%",
+    minHeight: "400px",
+  },
+  [theme.breakpoints.down('xs')]: {
+    minHeight: "350px",
+  },
 }));
 
 const GradientButton = styled(Button)(({ theme }) => ({
@@ -57,13 +72,21 @@ const GradientButton = styled(Button)(({ theme }) => ({
 
 const HeroSection = styled(Box)(({ theme }) => ({
   textAlign: "center",
-  padding: theme.spacing(8, 0, 6),
+  padding: theme.spacing(8, 2, 6),
   background: `linear-gradient(135deg, ${alpha(
     theme.palette.primary.main,
     0.1
   )}, ${alpha(theme.palette.secondary.main, 0.1)})`,
   borderRadius: theme.spacing(3),
   marginBottom: theme.spacing(6),
+  [theme.breakpoints.down('md')]: {
+    padding: theme.spacing(6, 2, 4),
+    marginBottom: theme.spacing(4),
+  },
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(4, 1, 3),
+    marginBottom: theme.spacing(3),
+  },
 }));
 
 const Projects = () => {
@@ -126,7 +149,15 @@ const Projects = () => {
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ mb: 2, lineHeight: 1.6 }}
+              sx={{ 
+                mb: 2, 
+                lineHeight: 1.6,
+                height: '4.5em', // Fixed height for 3 lines
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+              }}
             >
               {project.description}
             </Typography>
@@ -209,6 +240,12 @@ const Projects = () => {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 mb: 3,
+                fontSize: {
+                  xs: '2.5rem',
+                  sm: '3rem',
+                  md: '3.5rem',
+                  lg: '4rem',
+                },
               }}
             >
               My Projects
@@ -221,6 +258,12 @@ const Projects = () => {
                 mx: "auto",
                 lineHeight: 1.6,
                 fontWeight: 300,
+                fontSize: {
+                  xs: '1.1rem',
+                  sm: '1.25rem',
+                  md: '1.5rem',
+                },
+                px: { xs: 2, sm: 3, md: 0 },
               }}
             >
               A collection of projects showcasing various technologies and
