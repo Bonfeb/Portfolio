@@ -116,7 +116,7 @@ const Projects = () => {
 
   const ProjectCard = ({ project, index }) => (
     <motion.div variants={cardVariants}>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} sm={12} md={3}>
         <StyledCard>
           <CardMedia
             component="img"
