@@ -4,7 +4,7 @@ import reactNativeSkill from "../assets/images/reactNativeSkill.jpg";
 import djangoSkill from "../assets/images/djangoSkill.jpg";
 import drfSkill from "../assets/images/drfSkill.png";
 import htmlCssSkill from "../assets/images/htmlCssSkill.jpg"
-import offworldmedia from "../assets /images/offworldmedia.png";
+import offworldmedia from "../assets/images/offworldmedia.png";
 import bursaryApp from "../assets/images/bursaryApp.png";
 import budgetAllocation from "../assets/images/budgetAllocation.png";
 import notesApp from "../assets/images/notesApp.png";
