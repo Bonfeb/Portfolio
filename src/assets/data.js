@@ -4,10 +4,10 @@ import reactNativeSkill from "../assets/images/reactNativeSkill.jpg";
 import djangoSkill from "../assets/images/djangoSkill.jpg";
 import drfSkill from "../assets/images/drfSkill.png";
 import htmlCssSkill from "../assets/images/htmlCssSkill.jpg"
-import offworldMedia from "../images/offworldMedia.png";
-import bursaryApp from "../images/bursaryApp.png";
-import budgetAllocation from "../images/budgetAllocation.png";
-import notesApp from "../images/notesApp.png";
+import offworldMedia from "./images/offworldMedia.png";
+import bursaryApp from "./images/bursaryApp.png";
+import budgetAllocation from "./images/budgetAllocation.png";
+import notesApp from "./images/notesApp.png";
 
 
 // Resume Data
