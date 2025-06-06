@@ -4,10 +4,10 @@ import reactNativeSkill from "../assets/images/reactNativeSkill.jpg";
 import djangoSkill from "../assets/images/djangoSkill.jpg";
 import drfSkill from "../assets/images/drfSkill.png";
 import htmlCssSkill from "../assets/images/htmlCssSkill.jpg"
-import offworldMedia from "./images/offworldMedia.png";
-import bursaryApp from "./images/bursaryApp.png";
-import budgetAllocation from "./images/budgetAllocation.png";
-import notesApp from "./images/notesApp.png";
+import offworldmedia from "../assets /images/offworldmedia.png";
+import bursaryApp from "../assets/images/bursaryApp.png";
+import budgetAllocation from "../assets/images/budgetAllocation.png";
+import notesApp from "../assets/images/notesApp.png";
 
 
 // Resume Data
@@ -183,7 +183,7 @@ export const projects = [
     {
       id: 1,
       title: "OffWorld Media Africa",
-      image: offworldMedia,
+      image: offworldmedia,
       description: [
         "A full-stack web application that allows users to book studio sessions—such as photoshoots, music recording, and video recording—online.", 
         "Features integrated M-Pesa payments for seamless transactions.", 
