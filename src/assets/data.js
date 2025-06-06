@@ -184,7 +184,7 @@ export const projects = [
       id: 1,
       title: "OffWorld Media Africa",
       image: offworldMedia,
-      description: "A full-stack web application that allows users to book studio sessions—such as photoshoots, music recording, and video recording—online. Features integrated M-Pesa payments for seamless transactions. Built with Django REST Framework (DRF) on the backend and React for the frontend.",
+      description: ["A full-stack web application that allows users to book studio sessions—such as photoshoots, music recording, and video recording—online. Features integrated M-Pesa payments for seamless transactions. Built with Django REST Framework (DRF) on the backend and React for the frontend."],
       technologies: ["React", "Django", "HTML5", "React Bootstrap", "MUI"],
       link: "https://github.com/Bonfeb/offworldmedia-backend.git",
       liveUrl: "https://offworld-media-frontend.onrender.com/"
@@ -193,7 +193,7 @@ export const projects = [
       id: 2,
       title: "Bursary Application System",
       image: bursaryApp,
-      description: "An online platform where students can apply for various bursaries. Applications are reviewed and approved by system administrators, after which funds are disbursed. Developed using Django and HTML5 for a streamlined backend-driven experience.",
+      description: ["An online platform where students can apply for various bursaries. Applications are reviewed and approved by system administrators, after which funds are disbursed. Developed using Django and HTML5 for a streamlined backend-driven experience."],
       technologies: ["Django", "HTML5", "CSS", "JavaScript"],
       link: "https://github.com/Bonfeb/Bursary-Application-System.git",
       liveUrl: "https://bursary-application-system.onrender.com/"
@@ -202,7 +202,7 @@ export const projects = [
       id: 3,
       title: "Budget Allocation Application",
       image: budgetAllocation,
-      description: "A React-based tool designed for companies to efficiently allocate budgets across different departments based on available funds. Offers a simple and intuitive interface for managing financial planning.",
+      description: ["A React-based tool designed for companies to efficiently allocate budgets across different departments based on available funds. Offers a simple and intuitive interface for managing financial planning."],
       technologies: ["React"],
       link: "https://github.com/Bonfeb/Budget-Allocation-App.git",
       liveUrl: "https://github.com/Bonfeb/Budget-Allocation-App.git"
@@ -211,7 +211,7 @@ export const projects = [
       id: 4,
       title: "Notes Application",
       image: notesApp,
-      description: "A lightweight React application that enables users to manage to-do lists and take notes. Ideal for tracking daily tasks and boosting productivity.",
+      description: ["A lightweight React application that enables users to manage to-do lists and take notes. Ideal for tracking daily tasks and boosting productivity."],
       technologies: ["React"],
       link: "https://github.com/Bonfeb/Notes-App.git",
       liveUrl: "https://github.com/Bonfeb/Notes-App.git"

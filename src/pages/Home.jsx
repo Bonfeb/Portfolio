@@ -218,9 +218,9 @@ const Home = () => {
     },
     { 
       icon: <Language color="primary" sx={{ mr: 1 }} />, 
-      text: "https://bonfebportfolio.netlify.app/", 
+      text: "https://bonfeb.netlify.app/", 
       value: "", 
-      link: "https://bonfebportfolio.netlify.app/",
+      link: "https://bonfeb.netlify.app/",
       external: true 
     },
   ];
