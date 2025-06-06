@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Box,
   Container,
@@ -11,89 +12,31 @@ import {
   Button,
   Chip,
   Paper,
-  Fade,
-  Zoom,
-  IconButton,
-  Tooltip,
-  Divider,
   Stack,
   useTheme,
   alpha,
-  Backdrop,
 } from "@mui/material";
 import {
   Launch as LaunchIcon,
   GitHub as GitHubIcon,
   Email as EmailIcon,
-  Star as StarIcon,
   Code as CodeIcon,
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { projects } from "../assets/data";
 
 // Styled components
-const StyledCard = styled(Card)(({ theme, featured }) => ({
+const StyledCard = styled(Card)(({ theme }) => ({
   height: "100%",
   display: "flex",
   flexDirection: "column",
   position: "relative",
-  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
   background:
     theme.palette.mode === "dark"
       ? `linear-gradient(145deg, ${theme.palette.grey[800]}, ${theme.palette.grey[900]})`
       : `linear-gradient(145deg, ${theme.palette.common.white}, ${theme.palette.grey[50]})`,
-  border: featured ? `2px solid ${theme.palette.primary.main}` : "none",
   borderRadius: theme.spacing(2),
   overflow: "hidden",
-  "&:hover": {
-    transform: "translateY(-8px) scale(1.02)",
-    boxShadow: theme.shadows[20],
-    "& .card-overlay": {
-      opacity: 1,
-    },
-    "& .card-media": {
-      transform: "scale(1.1)",
-    },
-  },
-}));
-
-const CardMediaStyled = styled(CardMedia)(({ theme }) => ({
-  height: 240,
-  position: "relative",
-  transition: "transform 0.4s ease",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-}));
-
-const CardOverlay = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  background: `linear-gradient(135deg, ${alpha(
-    theme.palette.primary.main,
-    0.9
-  )}, ${alpha(theme.palette.secondary.main, 0.9)})`,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  opacity: 0,
-  transition: "opacity 0.3s ease",
-  backdropFilter: "blur(4px)",
-}));
-
-const FeaturedBadge = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(1),
-  right: theme.spacing(1),
-  zIndex: 1,
-  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-  borderRadius: theme.spacing(1),
-  padding: theme.spacing(0.5, 1),
-  display: "flex",
-  alignItems: "center",
-  gap: theme.spacing(0.5),
 }));
 
 const GradientButton = styled(Button)(({ theme }) => ({
@@ -124,83 +67,44 @@ const HeroSection = styled(Box)(({ theme }) => ({
 }));
 
 const Projects = () => {
-  const [hoveredCard, setHoveredCard] = useState(null);
   const theme = useTheme();
 
-  const featuredProjects = projects.filter((project) => project.featured);
-  const otherProjects = projects.filter((project) => !project.featured);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
 
-  const ProjectCard = ({ project, featured = false, index }) => (
-    <Zoom in={true} timeout={300 + index * 100}>
-      <Grid item xs={12} sm={6} md={featured ? 6 : 4}>
-        <StyledCard
-          featured={featured}
-          onMouseEnter={() => setHoveredCard(project.id)}
-          onMouseLeave={() => setHoveredCard(null)}
-        >
-          {featured && (
-            <FeaturedBadge>
-              <StarIcon sx={{ fontSize: 16, color: "white" }} />
-              <Typography
-                variant="caption"
-                sx={{ color: "white", fontWeight: 600 }}
-              >
-                Featured
-              </Typography>
-            </FeaturedBadge>
-          )}
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
 
-          <Box sx={{ position: "relative" }}>
-            <CardMediaStyled
-              className="card-media"
-              image={project.image}
-              title={project.title}
-            />
-            <CardOverlay className="card-overlay">
-              <Stack direction="row" spacing={2}>
-                <Tooltip title="View Live Demo" arrow>
-                  <IconButton
-                    component="a"
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      bgcolor: "rgba(255,255,255,0.2)",
-                      color: "white",
-                      backdropFilter: "blur(10px)",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      "&:hover": {
-                        bgcolor: "rgba(255,255,255,0.3)",
-                        transform: "scale(1.1)",
-                      },
-                    }}
-                  >
-                    <LaunchIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="View Source Code" arrow>
-                  <IconButton
-                    component="a"
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      bgcolor: "rgba(255,255,255,0.2)",
-                      color: "white",
-                      backdropFilter: "blur(10px)",
-                      border: "1px solid rgba(255,255,255,0.3)",
-                      "&:hover": {
-                        bgcolor: "rgba(255,255,255,0.3)",
-                        transform: "scale(1.1)",
-                      },
-                    }}
-                  >
-                    <GitHubIcon />
-                  </IconButton>
-                </Tooltip>
-              </Stack>
-            </CardOverlay>
-          </Box>
+  const ProjectCard = ({ project, index }) => (
+    <motion.div variants={cardVariants}>
+      <Grid item xs={12} sm={6} md={4}>
+        <StyledCard>
+          <CardMedia
+            component="img"
+            height="240"
+            image={project.image}
+            alt={project.title}
+            sx={{
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
 
           <CardContent sx={{ flexGrow: 1, p: 3 }}>
             <Typography
@@ -275,7 +179,7 @@ const Projects = () => {
           </CardActions>
         </StyledCard>
       </Grid>
-    </Zoom>
+    </motion.div>
   );
 
   return (
@@ -288,139 +192,103 @@ const Projects = () => {
     >
       <Container maxWidth="xl">
         {/* Hero Section */}
-        <HeroSection>
-          <Fade in={true} timeout={800}>
-            <Box>
-              <Typography
-                variant="h2"
-                component="h1"
-                gutterBottom
-                sx={{
-                  fontWeight: 700,
-                  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  mb: 3,
-                }}
-              >
-                My Projects
-              </Typography>
-              <Typography
-                variant="h5"
-                color="text.secondary"
-                sx={{
-                  maxWidth: 800,
-                  mx: "auto",
-                  lineHeight: 1.6,
-                  fontWeight: 300,
-                }}
-              >
-                A collection of projects showcasing various technologies and
-                problem-solving approaches. Each project represents learning and
-                growth in different areas of development.
-              </Typography>
-            </Box>
-          </Fade>
-        </HeroSection>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <HeroSection>
+            <Typography
+              variant="h2"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 700,
+                background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                mb: 3,
+              }}
+            >
+              My Projects
+            </Typography>
+            <Typography
+              variant="h5"
+              color="text.secondary"
+              sx={{
+                maxWidth: 800,
+                mx: "auto",
+                lineHeight: 1.6,
+                fontWeight: 300,
+              }}
+            >
+              A collection of projects showcasing various technologies and
+              problem-solving approaches. Each project represents learning and
+              growth in different areas of development.
+            </Typography>
+          </HeroSection>
+        </motion.div>
 
-        {/* Featured Projects */}
-        <Box sx={{ mb: 8 }}>
-          <Typography
-            variant="h3"
-            component="h2"
-            gutterBottom
-            sx={{
-              fontWeight: 600,
-              mb: 4,
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-            }}
-          >
-            <StarIcon sx={{ color: theme.palette.primary.main }} />
-            Featured Projects
-          </Typography>
-
+        {/* Projects Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <Grid container spacing={4}>
-            {featuredProjects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                featured={true}
-                index={index}
-              />
-            ))}
-          </Grid>
-        </Box>
-
-        <Divider sx={{ my: 6 }} />
-
-        {/* Other Projects */}
-        <Box sx={{ mb: 8 }}>
-          <Typography
-            variant="h3"
-            component="h2"
-            gutterBottom
-            sx={{
-              fontWeight: 600,
-              mb: 4,
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-            }}
-          >
-            <CodeIcon sx={{ color: theme.palette.secondary.main }} />
-            Other Projects
-          </Typography>
-
-          <Grid container spacing={3}>
-            {otherProjects.map((project, index) => (
+            {projects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </Grid>
-        </Box>
+        </motion.div>
 
         {/* Call to Action */}
-        <Paper
-          elevation={3}
-          sx={{
-            textAlign: "center",
-            p: 6,
-            mt: 8,
-            background: `linear-gradient(135deg, ${alpha(
-              theme.palette.primary.main,
-              0.05
-            )}, ${alpha(theme.palette.secondary.main, 0.05)})`,
-            borderRadius: 3,
-            border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-          }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Typography
-            variant="h4"
-            component="h3"
-            gutterBottom
-            sx={{ fontWeight: 600, mb: 2 }}
+          <Paper
+            elevation={3}
+            sx={{
+              textAlign: "center",
+              p: 6,
+              mt: 8,
+              background: `linear-gradient(135deg, ${alpha(
+                theme.palette.primary.main,
+                0.05
+              )}, ${alpha(theme.palette.secondary.main, 0.05)})`,
+              borderRadius: 3,
+              border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+            }}
           >
-            Interested in collaborating?
-          </Typography>
-          <Typography
-            variant="h6"
-            color="text.secondary"
-            sx={{ mb: 4, fontWeight: 300 }}
-          >
-            I'm always open to discussing new opportunities and interesting
-            projects.
-          </Typography>
-          <GradientButton
-            startIcon={<EmailIcon />}
-            component="a"
-            href="mailto:your.email@example.com"
-            size="large"
-          >
-            Get In Touch
-          </GradientButton>
-        </Paper>
+            <Typography
+              variant="h4"
+              component="h3"
+              gutterBottom
+              sx={{ fontWeight: 600, mb: 2 }}
+            >
+              Interested in collaborating?
+            </Typography>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+              sx={{ mb: 4, fontWeight: 300 }}
+            >
+              I'm always open to discussing new opportunities and interesting
+              projects.
+            </Typography>
+            <GradientButton
+              startIcon={<EmailIcon />}
+              component="a"
+              href="mailto:bonfebdevs@gmail.com?subject=Contact%20Request&body=Hello,%20I%20would%20like%20to%20get%20in%20touch%20about..."
+              size="large"
+            >
+              Get In Touch
+            </GradientButton>
+          </Paper>
+        </motion.div>
       </Container>
     </Box>
   );
